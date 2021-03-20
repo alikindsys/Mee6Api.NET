@@ -448,3 +448,6 @@ healthchecksdb
 MigrationBackup/
 
 # End of https://www.gitignore.io/api/rider,dotnetcore,visualstudio,visualstudiocode
+
+id_rsa
+id_rsa.pub
