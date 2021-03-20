@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -9,7 +10,7 @@ using Mee6Api.Requests;
 namespace Mee6Api {
     public class Mee6Client : IDisposable {
         HttpClient _client;
-        Dictionary<ulong, List<Player>> _guildCache = new();
+        ConcurrentDictionary<ulong, List<Player>> _guildCache = new();
 
         public Mee6Client() {
             _client = new HttpClient();
@@ -44,7 +45,7 @@ namespace Mee6Api {
             }
             players.AddRange(current.Players);
             if (!_guildCache.ContainsKey(guildId)) {
-                _guildCache.Add(guildId, players);
+                _guildCache.TryAdd(guildId, players);
             }
             else {
                 _guildCache[guildId] = players;
