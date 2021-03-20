@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Mee6Api.Models;
@@ -22,6 +23,12 @@ namespace Mee6Api {
 
             await populateWith(guildID);
             return _guildCache[guildID];
+        }
+
+        public async Task<Player> GetMemberDetails(ulong guildID, ulong memberID, bool useCache = true) {
+            if (!_guildCache.ContainsKey(guildID) || !useCache) await populateWith(guildID);
+            var players = _guildCache[guildID];
+            return players.All(x => x.Id != memberID.ToString()) ? null : players.First(x => x.Id == memberID.ToString());
         }
 
         public Task<Leaderboard> GetLeaderboardAsync(ulong guildId, int limit = 100, int page = 0) 
