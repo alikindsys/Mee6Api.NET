@@ -9,6 +9,7 @@ namespace Mee6Api.Test {
             using var client = new Mee6Client();
             var leaderboard = await client.GetLeaderboardAsync(194925640888221698);
             var members = await client.GetAllMembersAsync(194925640888221698);
+            var paulo = await client.GetMemberDetails(194925640888221698, 155774074885242880);
         }
     }
 }
