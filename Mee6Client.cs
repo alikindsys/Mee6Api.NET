@@ -16,12 +16,7 @@ namespace Mee6Api {
         }
 
         public async Task<List<Player>> GetAllMembersAsync(ulong guildID, bool useCache = true) {
-            if (!_guildCache.ContainsKey(guildID)) await populateWith(guildID);
-            if (useCache) {
-                return _guildCache[guildID];
-            }
-
-            await populateWith(guildID);
+            if (!_guildCache.ContainsKey(guildID) || !useCache) await populateWith(guildID);
             return _guildCache[guildID];
         }
 
